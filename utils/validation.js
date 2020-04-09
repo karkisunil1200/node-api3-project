@@ -9,7 +9,7 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
   if (!req.body.name) {
-    res.status(400).jsons({errMessage: 'The given name does not match'});
+    res.status(400).json({errMessage: 'The given name does not match'});
   }
   next();
 }

@@ -35,6 +35,19 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  // do your magic!
+
+  const post = req.body;
+  db.insert(post)
+    .then(hubs => {
+      res.status(200).json(hubs);
+    })
+    .catch(err => {
+      res.status(500).json({message: 'We could not find what you were looking for'});
+    });
+});
+
 router.delete('/:id', (req, res) => {
   // do your magic!
   const id = req.params.id;
