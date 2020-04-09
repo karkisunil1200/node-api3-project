@@ -20,20 +20,54 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   // do your magic!
+  const id = req.params.id;
+
+  db.get(id)
+    .then(post => {
+      if (post) {
+        res.status(201).json(post);
+      } else {
+        res.status(404).json({message: 'Could not find the ID'});
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message: 'Could not get the post'});
+    });
 });
 
 router.delete('/:id', (req, res) => {
   // do your magic!
+  const id = req.params.id;
+
+  db.remove(id)
+    .then(post => {
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({message: 'The Id could not be found'});
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message: 'post could not be deleted'});
+    });
 });
 
 router.put('/:id', (req, res) => {
   // do your magic
+  const id = req.params.id;
+  const changes = req.body;
+
+  db.update(id, changes)
+    .then(post => {
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({message: 'The Id could not be found'});
+      }
+    })
+    .catch(err => {
+      res.status(500).json({message: 'post could not be deleted'});
+    });
 });
-
-// custom middleware
-
-function validatePostId(req, res, next) {
-  // do your magic!
-}
 
 module.exports = router;
