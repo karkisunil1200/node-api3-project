@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./postDb');
+const {validatePost} = require('../utils/validation');
 
 const router = express.Router();
 
@@ -35,10 +36,10 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', validatePost, (req, res) => {
   // do your magic!
-
   const post = req.body;
+
   db.insert(post)
     .then(hubs => {
       res.status(200).json(hubs);

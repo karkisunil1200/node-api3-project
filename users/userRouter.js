@@ -30,8 +30,6 @@ router.post('/:id/posts', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  const enviroment = process.env;
-  const prot = process.env.PORT;
   // do your magic!
   Hubs.get()
     .then(hubs => {
@@ -42,8 +40,9 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateUserId, (req, res) => {
   // do your magic!
+  const {id} = req.params;
   Hubs.getById(id)
     .then(hubs => {
       res.status(200).json(hubs);
